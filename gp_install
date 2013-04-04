@@ -1,0 +1,19 @@
+#!/bin/sh
+
+SCRIPT_DIR=`dirname "$0"`
+
+PKG_FILE="$SCRIPT_DIR/GlobalProtect.pkg"
+PKG_COPY='/tmp/GlobalProtect.pkg'
+
+if [ ! -f "$PKG_FILE" ]
+then
+  echo "You must download and put the GlobalProtect.pkg file in the same directory as the scripts." 1>&2
+  echo "See the README file for the url." 1>&2
+  exit 1
+fi
+
+# Global Protect nonsensically removes its own pkg file after install.
+# even though that file is required for uninstallation.
+cp "$PKG_FILE" "$PKG_COPY"
+
+sudo installer -pkg "$PKG_COPY" -target /

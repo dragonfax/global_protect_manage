@@ -1,0 +1,16 @@
+#!/bin/sh
+
+SCRIPT_DIR=`dirname "$0"`
+PKG_FILE="$SCRIPT_DIR/GlobalProtect.pkg"
+UNINSTALL_XML="$SCRIPT_DIR/Uninstall.ChoiceChanges.xml"
+
+if [ ! -f "$PKG_FILE" ]
+then
+  echo "You must download and put the GlobalProtect.pkg file in the same directory as the scripts." 1>&2
+  echo "See the README file for the url." 1>&2
+  exit 1
+fi
+
+# the "uninstsall changes xml" swaps the default choices in the install dialog, from install to uninstall
+
+sudo installer -applyChoiceChangesXML "$UNINSTALL_XML" -pkg "$PKG_FILE" -target /
